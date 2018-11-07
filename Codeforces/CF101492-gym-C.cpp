@@ -7,7 +7,7 @@
   * of the segment respectively). There will be a pair of coprime number if min(d[u], d[u + 1], d[u + 2], ... d[v]) <= v.
   *
   * So there are 2 parts of the solution. The second part (find the min) I use Spare table. For the first part,
-  * I use bitset, and d[i] for each I using bruteforce with the bitset. Each i, the number of bitsets are merged is equals to the
+  * I used bitset, and to find d[i] for each i, I was using bruteforce with the bitset. Each i, the number of bitsets are merged is equals to the
   * number of divisor of a[i]. It is easily to see that this time complexity is a little out of bound, so a small trick is used here: 
   * instead of merging all the bytes of the bitsets, I just go and do merging when needed.
   */
