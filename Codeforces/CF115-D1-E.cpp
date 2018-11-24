@@ -1,3 +1,7 @@
+/*
+ * Authot: Tran Quang Loc (darkkcyan)
+ * Editorial: https://codeforces.com/blog/entry/2584
+ */
 #include <bits/stdc++.h>
 using namespace std;
 
