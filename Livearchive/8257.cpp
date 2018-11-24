@@ -1,6 +1,9 @@
 /**
  * Author: Tran Quang Loc (darkkcyan)
- * Solution:
+ * Update: found indetailed editorial: http://staff.bath.ac.uk/masjhd/NWERC/news/nwerc2017slides.pdf, but a little different than mine
+ * since I used a data structure to manage my data.
+ *
+ * Solution: (similar to editorial)
  * First observation: the root must be coprime to all number in the array. If there are more then 1 such number, pick any (I pick the 1st one).
  * To proof that work for any such number, we can change from an existed solution into a solution with desired root, with the help of
  * operation-like AVL-tree's rotate.
