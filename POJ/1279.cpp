@@ -47,12 +47,9 @@ struct p3 {
   ld x, y, z;
   p3(): z(1) {}
   p3(ld _x, ld _y, ld _z): x(_x), y(_y), z(_z) { }
-  p3& stan() {
+  p3 stan() const {
     if (abs(z) < eps) return *this;
-    x /= z;
-    y /= z;
-    z = 1;
-    return *this;
+    return p3(x / z, y / z, 1); 
   }
 };
 
@@ -61,7 +58,7 @@ ostream& operator<<(ostream& cout, const p3& a) {
 }
 
 p3 operator - (p3 a, p3 b) {
-  a.stan(); b.stan();
+  a = a.stan(); b = b.stan();
   a.x -= b.x;
   a.y -= b.y;
   return a;
@@ -77,11 +74,6 @@ p3 operator * (const p3& a, const p3& b) {
 
 ld operator & (const p3& a, const p3& b) {
   return a.x * b.x + a.y * b.y + a.z * b.z;
-}
-
-inline
-ld crossp2(p3 a, p3 b) {
-  return (a.x * b.y - a.y * b.x) / (a.z * b.z);
 }
 
 vector<p3> cut(const vector<p3>& poly, const p3& a, const p3& b) {
@@ -101,7 +93,7 @@ vector<p3> cut(const vector<p3>& poly, const p3& a, const p3& b) {
 ld area(const vector<p3>& a) {
   ld ans = 0;
   for (int pre = len(a) - 1, i = 0; i < len(a); pre = i ++) {
-    ans += crossp2(a[pre], a[i]);
+    ans += (a[pre].stan() * a[i].stan()).z;
   }
   return ans / 2;
 }
