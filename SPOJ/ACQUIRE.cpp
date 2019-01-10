@@ -1,5 +1,7 @@
 /**
  * Author: Tran Quang Loc (darkkcyan)
+ * Note: In this problem FJ can actually *REARRANGES* the plots and then groups them.
+ *       I misunderstood the statement by the word "successive". (Or the statement confused me ??).
  * Editorial: http://contest.usaco.org/TESTDATA/MAR08.acquire.htm
  */
 #include <bits/stdc++.h>
