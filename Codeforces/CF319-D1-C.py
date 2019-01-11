@@ -20,7 +20,8 @@ def check(l1, l2, nl):
 n = int(input())
 a = list(map(int, input().split()))
 b = list(map(int, input().split()))
-ans = 0
+ans = 0  # we don't even need the entire dp array, because the deque store the value of all previous ones.
+         # this variable contains the current computed dp value
 
 hull = deque()
 hull.append(line(b[0], 0))
