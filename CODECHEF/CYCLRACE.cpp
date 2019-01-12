@@ -1,6 +1,10 @@
 /**
  * Author: Tran Quang Loc (darkkcyan)
- * Editorial: https://discuss.codechef.com/questions/78425/cyclrace-editorial
+ * Editorial: https://discuss.codechef.com/questions/78425/cyclrace-editorial, but my solution look like the one in the comment.
+ * Just a quick note about the part that computes the new line. Let's imagine the graph. Our lines represent the position of
+ * the racer depent on time. If we got new update query (time, id, newSpeed), then the racer id-th is at the position
+ * lines[id](time) (see the code), and the coordinates on the graph is (time, lines[id](time)).
+ * So the new line cross this point, and from here, transform a little, get the new equation.
  */
 #include <bits/stdc++.h>
 using namespace std;
