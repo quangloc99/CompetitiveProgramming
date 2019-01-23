@@ -4,7 +4,7 @@
  *   Assume that we can go right only. The "go left" part can be done similarly and we just get the max.
  *   Here the formula: 
  *       dp[i][f] = max(dp[i - 1][j] + sum_a[i][f] - sum_a[i][j]) = sum_a[i][f] + max(dp[i - ][j] - sum_a[i][j]) for all j: sum_l[i][f] - sum_l[i][j] <= k
- *  where sum_a[i][f] = a[0] + a[1] + ... + a[f - 1]  (first f numbers of the i-th row), sum_l is similarly defined.
+ *  where sum_a[i][f] = ap[i][0] + a[i][1] + ... + a[i][f - 1]  (first f numbers of the i-th row), sum_l is similarly defined.
  * So with this formula with just compute all dp for each row. To compute the following row, we use deque.
  */
 
