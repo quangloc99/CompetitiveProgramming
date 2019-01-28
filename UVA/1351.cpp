@@ -53,8 +53,6 @@ void genhs() {
 llong geths(int l, int r) {
   llong ans = (hs[r + 1] - hs[l] * p29[r - l + 1] % mod) % mod;
   if (ans < 0) ans += mod;
-
-  //clog << "geths " << l << ' ' << r << ' ' << ans << ' ' << hs[r + 1] << ' ' << hs[l] << endl;
   return ans;
 }
 
@@ -70,24 +68,17 @@ int main(void) {
   ////clog << t << endl;
   while (t--) {
     cin >> s;
-    //s = string(20, 'a');
-    //for (char& c: s) if (rand() & 1) c = 'b';
-    //clog << s << endl;
     genhs();
-    //clog << tovec(hs, hs + len(s) + 1) << endl;
     rep1(l, len(s)) {
       vector<int> d;
       rep1(i, l - 1) if (l % i == 0)
         d.push_back(i);
-      //clog << l << ' ' << d << endl;
 
       rep(i, len(s) - l + 1) {
         int f = i + l - 1;
         dp[i][f] = l;
         // check for its substrings
         for (int g = i; g < f; ++g) {
-          //if (dp[i][f] > dp[i][g] + dp[g + 1][f]) 
-            //clog << "-> " << i << ' ' << f << ' ' << g << ' ' << dp[i][g] + dp[g + 1][f] << ' ' << dp[i][f] << endl;
           dp[i][f] = min(dp[i][f], dp[i][g] + dp[g + 1][f]);
         }
         
@@ -95,7 +86,6 @@ int main(void) {
         for (auto g: d) {
           bool ok = true;
           for (int h = i + g; h + g - 1 <= f; h += g) {
-            //clog << "hs " << i << ' ' << f << ' ' << g << ' ' << h << ' ' << geths(i, i + g - 1) << ' ' << geths(h, h + g - 1) << endl;
             if (geths(i, i + g - 1) != geths(h, h + g - 1)) {
               ok = false;
               break;
@@ -103,10 +93,8 @@ int main(void) {
           }
           if (ok) {
             dp[i][f] = min(dp[i][f], 2 + dp[i][i + g - 1] + numlen(l / g));
-            //clog << "-> " << i << ' ' << f << ' ' << g << ' ' << dp[i][f] << endl;
           }
         }
-        //clog << i << ' ' << f << ' ' << dp[i][f] << endl;
       }
     }
 
