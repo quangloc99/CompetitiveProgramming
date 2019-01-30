@@ -6,8 +6,8 @@
  *       - the shortest path from all added nodes to the new nodes.
  *       - the shortest path from the new node to all the other added nodes.
  *       - the shortest path between 2 added nodes that goes through the new nodes.
- *       As we know, Floyd is basically DP, so after processing the distances between the fisrt i added nodes (or the last i removed node),
- *       we can use those infomation to compute those things above in O(n^2), so overall algorithm is O(n^3).
+ *       As we know, Floyd is basically DP, so after processing the distances between the fisrt i added nodes (or the last i removed nodes),
+ *       we can use those infomations to compute those things above with the new node in O(n^2), so overall algorithm is O(n^3).
  */
 #include <bits/stdc++.h>
 using namespace std;
