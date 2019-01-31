@@ -84,15 +84,6 @@ randheap* join(randheap* u, randheap* v) {
   return u;
 }
 
-//void printHeap(randheap* x) {
-  //if (!x) return;
-  //clog << "(" << x->val << ", "; 
-  //printHeap(x->l);
-  //clog << ", ";
-  //printHeap(x->r);
-  //clog << ")";
-//}
-//
 inline void push(randheap*& u, llong val, int x) {
   u = join(u, new randheap(val, x));
 }
@@ -148,39 +139,21 @@ int lca(int u, int v) {
   return p[u];
 }
 
-
-vector<pair<llong, int>> rawval[maxn];
 randheap* vals[maxn] = {0};
 llong ans = 0;
 bool exclude[maxn] = {0};
 void dfs2(int u) {
-  {
-    make_heap(rawval[u].rbegin(), rawval[u].rend());
-    vector<randheap*> rh(len(rawval[u]));
-    for (int i = len(rawval[u]); i--; ) {
-      rh[i] = new randheap(rawval[u][i].xx, rawval[u][i].yy);
-      if (2 * i + 1 < len(rawval[u])) rh[i]->l = rh[2 * i + 1];
-      if (2 * i + 2 < len(rawval[u])) rh[i]->r = rh[2 * i + 2];
-    }
-    if (len(rh)) vals[u] = rh[0];
-  }
-  while (vals[u] and vals[u]->val.yy >= depth[u]) {
-    pop(vals[u]);
-  }
   for (auto v: grg[u]) {
     if (v == p[u]) continue;
     dfs2(v);
-    while (vals[v] and vals[v]->val.yy >= depth[u]) {
-      pop(vals[v]);
-    }
     vals[u] = join(vals[u], vals[v]);
   }
+  while (vals[u] and vals[u]->val.yy >= depth[u]) pop(vals[u]);
   if (vals[u] == 0 and !exclude[u]) {
     cout << -1;
     exit(0);
   }
-  if (!exclude[u]) 
-    ans += vals[u]->val.xx;
+  if (!exclude[u]) ans += vals[u]->val.xx;
 }
 
 int main(void) {
@@ -200,7 +173,6 @@ int main(void) {
     grg[v].push_back(u);
   }
 
-
   vector<pair<llong, ii>> rest;
   vector<ii> ex;
   rep(i, m) {
@@ -218,7 +190,6 @@ int main(void) {
   p[1] = 1;
   dfs(1);
 
-
   exclude[1] = 1;
   for (auto i: ex) {
     int u = i.xx, v = i.yy;
@@ -230,12 +201,11 @@ int main(void) {
     llong c = i.xx;
     int u = i.yy.xx, v = i.yy.yy;
     int l = lca(u, v);
-      rawval[u].push_back({c, depth[l]});
-      rawval[v].push_back({c, depth[l]});
+    push(vals[u], c, depth[l]);
+    push(vals[v], c, depth[l]);
   }
 
 
-  //if (n == 500000 and k == 499999 and m == 500000)  return 0;
   ans = 0;
   dfs2(1);
   cout << ans;
