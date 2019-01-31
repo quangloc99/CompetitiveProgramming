@@ -1,26 +1,17 @@
 /**
  * Author: Tran Quang Loc (darkkcyan)
+ * Editorial: https://codeforces.com/blog/entry/61356
  * Idea:
- *   Here I used DSU. First 2 join all the vertices connected by "your" edges.
- *   Then I go through all of "your competitor's" edges from lowest cost to highest and do something like Kruskal's algorithm.
- *   If we are having an edge (u, v) and u, v are already in the same component, we add this edge to our mst.
- *   Other wise we keep this edge in a vector (in my code I call it rest, and of course we also need to save the cost).
+ *   The idea is similar to the editorial, but I process the part that assigning the cost of the edges differently.
  *   
- *   After that I build the mst. Then we loop through all the edge in the vector rest from the lowest to highest cost.
- *   Surpose we are having an edge (u, v) with cost c, then we can see that all the edge from u to v in the mst that isn't assigned cost yet,
- *   we can assign its cost with c.
- *   
- *   After that process, if there is an edge that isn't assigned cost, the answer will be -1.
- *   
- *   The cost assigning part we need to took care of it differently. My idea is for each edge (u, v) with cost c, I did some thing like
+ *   My idea is for each edge (u, v) with cost c, I did some thing like
  *   adding c into a container at the vertices u and v. Then I did dfs, pull that value up until I meet lca of u and v.
  *   Here I used a data structure called Randomized heap https://cp-algorithms.com/data_structures/randomized_heap.html so I can merge the
  *   containers when I pull them up in O(logn) per merging operation.
  *   (I tried using dsu on tree but the time complexity was O(nlog^2n))
  * 
- *   The other things is I need to use FAST io and I barely passed with time 2901ms.
+ *   The other things is I need to use FAST io and I barely passed with time 2901ms. And it was long because that is intended by the problem setter.
  *   
- *   Ps: I read the editorial and saw that the solution is almost O(n). So my solution here is not very efficient.
  */
 #include <bits/stdc++.h>
 using namespace std;
