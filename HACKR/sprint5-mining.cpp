@@ -8,7 +8,7 @@
  *       So my idea is to divide all mines into 2 * k segments. The odd segments will go to the right and the even ones will go to the left.
  *       From here we can use dp with 2 states: dp[i][j] is the answer of the of the first j mines that required i pick up places.
  *       Because we have 2 kind of segments (move to left and move to right), we need 2 different formulas (in Python, because it is easier to read)
- *       - Move to the right: dp[i][j] = min([dp[i - 1][g] + sum([a[h] * (x[j - 1] - x[h]) for h in range(g + 1, f)] for g in range(f)])
+ *       - Move to the right: dp[i][j] = min([dp[i - 1][g] + sum([a[h] * (x[j - 1] - x[h]) for h in range(g + 1, f)]) for g in range(f)])
  *       - Move to the left:  dp[i][j] = min([dp[i - 1][g] + sum([a[h] * (x[h] - x[g]) for h in range(g, f)]) for g in range(1, f + 1)])
  *       Note that x - the coordinates and a - the amounts of gold - are 0-indexed.
  *       Also note that the "move to the left" segments will begin at the last element of "move to the left", because the that element
