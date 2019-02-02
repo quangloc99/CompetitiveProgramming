@@ -6,7 +6,7 @@
  * Idea:
  *   First, doing binary search to find the answer. The check the answer, we simply do cycle detection on graph of edges with cost
  *   bigger than the current answer.
- *   Second, the graph above is a DAG, so we can safely do topo sort. Because we don't need to mimized k so we using the topo order
+ *   Second, the graph above is a DAG, so we can safely do topo sort. Because we don't need to minimize k so we can use the topo order
  *   to find out which edge should be reversed so all edges satified the generated topo order.
  */
 #include <bits/stdc++.h>
