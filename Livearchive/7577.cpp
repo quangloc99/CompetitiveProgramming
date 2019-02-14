@@ -1,7 +1,7 @@
 /**
  * Author: Tran Quang Loc
  * My clerification: I think the courior just start at some branch, then it delivers
- * the messege to the other branch, and next it automatically jumps to another branch without costs.
+ * the messege to the other branch, and next it will automatically jump to another branch without any costs.
  *
  * Editorial: http://www.csc.kth.se/~austrin/icpc/finals2016solutions.pdf
  * The solution in the editorial has really cool observation, but I did not 
