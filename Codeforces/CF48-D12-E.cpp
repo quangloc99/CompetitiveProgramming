@@ -6,7 +6,8 @@
  * So in this problem there are 3 different subproblem: finding shortest path in a directed graph, cycle detection and longest path in DAG.
  * Those subproblem are classical, so nothing to dicusse here.
  * Note that when building the graph, when we got a vertex representing the "losing" state (head + tail > R), then we should skip to 
- * another node, but in my code, I continue building :p, so I must handle the "losing" state separately, and it is not too nice.
+ * another node, but in my code, I continue building :p, so I must handle the "losing" state separately, and it is not too nice,
+ * because it costs me 5 submissions to realize that fact.
  */
 #include <bits/stdc++.h>
 using namespace std;
