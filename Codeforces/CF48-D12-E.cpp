@@ -1,3 +1,4 @@
+// graph, bfs, DAG, cycle detection
 /**
  * Author: Tran Quang Loc (darkkcyan)
  * Editorial: https://codeforces.com/blog/entry/948
