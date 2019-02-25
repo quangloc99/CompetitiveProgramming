@@ -7,6 +7,9 @@
  * 
  * Important note: beware of this case: the graph has 2 edges: u->v and v->u. This make our undirectional graph a multigraph.
  * The implementaion found online does not handle this case, and I spent a little long time to found it!.
+ *
+ * Also, I use "throw" inorder to quit recursion faster, but that does not ensure all the *stack in my codes are empty, so
+ * for each test they must be cleared.
  */
 #include <bits/stdc++.h>
 using namespace std;
