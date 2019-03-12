@@ -20,6 +20,8 @@
  *
  * In my code, I don't compute S, but S/(m - 1)^n and then multiply the result by m - 1, because if we just compute S and (m - 1)^(n-1)
  * alone, then the result will be much bigger hence the precision error.
+ * Also note that I use only 1 dimensional array to compute the dp value, and to prevent it overwrite my value, I loop from the biggest
+ * value to the smallest.
  */
 #include <bits/stdc++.h>
 using namespace std;
