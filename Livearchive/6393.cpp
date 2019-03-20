@@ -4,7 +4,7 @@
  * Idea: the most important part (for me) is that we can reflect a cell beside rotate. So, it is easy to see that we can
  * just add cell above or to the right of the existed cell, because if we, for example, try to place below a cell, we can just reflect
  * that 2 cells and add the new cell above the existed cell. And also because we just need to add cell above or to the right, then
- * there is only one resticted for a cell (rather than 4).
+ * there is only one restiction for a cell (rather than 4).
  * So with that information, if we can reach a cell with a certain state (rotated or reflected) that we reached it before, we can 
  * conclude that this is unbounded. So this is the part of cycle dectection.
  * The other part is we should add more node inorder to reduce the number of edges. In my code, I add nodes represents the "Connector label",
