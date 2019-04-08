@@ -1,7 +1,6 @@
 /**
  * Author: Tran Quang Loc (darkkcyan)
- * Notes: I changed the grammar a bit. The expression is have a pair of brackets surround it now. Doing that made the parsing easier.
- *        
+ * Notes: I changed the grammar a bit. The expression is have a pair of brackets surround it now. Doing that made the parsing easier.        
  */
 #include <bits/stdc++.h>
 using namespace std;
