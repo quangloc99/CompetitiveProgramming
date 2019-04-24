@@ -5,14 +5,14 @@
  * The editorial started from A filled with 100 first dp states, but in my solution I started from dp[0] = 1. That is:
  * A = (1, 0, 0, 0, 0, ...., 0). The last element is the sum of all dp and initialized with 0, and all other 0 elements is for dp[-1],
  * dp[-2], .. dp[-99].
- * And here is my B matrix:
- * 0   cnt[1]   cnt[2]   ....   cnt[100]   0
- * 1   0        0        ....   0          0
- * 0   1        0        ....   0          0
- * 0   0        1        ....   0          0
- * .........................................
- * 0   0        0        ....   1          0
- * 1   0        0        ....   0          1
+ * And here is my B matrix: 
+ * cnt[1]   cnt[2]   cnt[3]   ....   cnt[100]   0     // this row is for new dp state
+ * 1        0        0        ....   0          0
+ * 0        1        0        ....   0          0
+ * 0        0        1        ....   0          0
+ * ..............................................
+ * 0        0        0        ....   1          0
+ * 1        0        0        ....   0          1     // this row is for the result: new_result = old_result + the_previous_new_dp_state.
  * And the final matrix is B^(x + 1) * A, and I think this is more general than the editorial.
  */
 #include <bits/stdc++.h>
