@@ -4,7 +4,7 @@ using namespace std;
 /**
  * Author: Tran Quang Loc (darkkcyan)
  * Idea:
- * It is not too hard to see that we can do binary search. The only thing now is to check if a answer is right or not.
+ * It is not too hard to see that we can do binary search the square's side. The only thing now is to check if a answer is right or not.
  * It is also not hard to see that the square must go though 3 points, and 2 of them must lie on opposite side.
  *
  * So what I did here is to bruteforce that 2 points. Since we know the square's side, we can find out the direction/slope of the
