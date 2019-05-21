@@ -9,7 +9,7 @@
  * - Otherwise u will be joined with v->lchild with probability v->size / (u->size + v->size)
  * This way of joining is really intuitive, because the one will be split is more likely to be the one with bigger size.
  * This modification is similar to this code: https://codeforces.com/contest/1056/submission/46222560
- * As I see, this approach performed better then the original one treap, especially in this problem. 
+ * As I see, this approach performed better than the original one treap, especially in this problem. 
  * But still, it could not passed with some optimization. My optimization here is to check if the tree height is bigger than 100, 
  * then I just rebuild the tree in order to reduce the size back to O(logn).
  */ 
