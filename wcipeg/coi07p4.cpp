@@ -11,6 +11,8 @@
  * I convert count2, count3, count5, count7 into a number, then the dp state now has only 3 componenets, and also I stored the count*
  * variables into an array, called `state`. My `cal_key` function is used to convert the number, and `count_le` function does the dp part.
  * Also in order to calculate and checking the dp state faster (well, shorter code, not really faster), I used valarray instead of vector.
+ *
+ * And also checkout the code with the test generator with bruteforce solution in the same folder.
  */
 #include <bits/stdc++.h>
 using namespace std;
