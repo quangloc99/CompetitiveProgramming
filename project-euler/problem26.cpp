@@ -10,7 +10,7 @@
  * And there is no more than x choices of remainders when dividing a number by x, so the finding step above we be done in O(x).
  *
  * Note: the problem said that we must find the number d *less* than N, not *less or equals*. I did carefully read this part
- * but somehow I changed from ans[num - 1] to ans[num + 1], and cost me serveral times to debugging.
+ * but somehow I changed from ans[num - 1] to ans[num + 1], and cost me serveral times to debug.
  */
 #include<bits/stdc++.h>
 using namespace std;
