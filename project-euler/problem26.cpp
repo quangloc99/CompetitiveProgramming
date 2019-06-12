@@ -1,5 +1,7 @@
 /**
  * Author: Tran Quang Loc (darkkcyan)
+ * The output for the orignal problem is written to STDERR.
+ *
  * Idea: if out number is `1/x`, and the cycle length is `l`, we can find the period like this:
  * (1/x) * 10^l - 1/x
  * This will work because 1/x * 10^x will shift the period the the integer part, and when se do subtraction, the fraction part
@@ -48,7 +50,7 @@ int main() {
         cout << ans[num - 1] << '\n';
     }
 
-    clog << ans[999];
+    clog << ans[999];  // original problem's output
 
     return 0;
 }
