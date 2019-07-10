@@ -151,7 +151,7 @@ namespace solution_100_points {
                     // What we are doing here is adding elements from smallest to biggest.
                     // If we don't do adding element into component, we always know for sure, when merging 2 components,
                     // we can always archive the alternating pattern.
-                    // (dp[i][f] += dp[i - 1][f] * (2 * f + unfilled_endpoints - 2)) %= rem;  // well, this line is necessary.
+                    // (dp[i][f] += dp[i - 1][f] * (2 * f + unfilled_endpoints - 2)) %= rem;  // well, this line is not necessary.
 
                 }
             }
