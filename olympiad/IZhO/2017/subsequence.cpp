@@ -2,6 +2,20 @@
  * Author: Tran Quang Loc (darkkcyan)
  * Problem: https://oj.uz/problem/view/IZhO17_subsequence
  * Category: dp, meet in the middle.
+ *
+ * The approach is similar to finding the longest increasing subsequence.
+ * We define dp[i] = longest beautiful subsequence that end at i-th element.
+ * dp[i] = max(dp[j] + 1) for j from 1 to i and bitCount(a[j] & a[i]) == k[i];
+ * To find j for each i, we can use meet in the middle. We know that a[i] will have no more than 20 bits.
+ * So we can break each a[i] into 2 halfs, each halfs has 10 bits.
+ * Let's define f[i][u][v][k] = the length of the longest beautiful subsequece can be archive from the first i numbers,
+ * the last number in the subsequence have the first half equals to u and bitCount(v & second_half) = k.
+ * We can use the array f[i] to calculate dp[i + 1] in O(2^10) as well as update the f[i + 1] also in O(2^10).
+ * Therefore we can end up with O(2^10 * n) solution.
+ *
+ * Note that to reduce the array size, we can discard the first dimension, because at each moment we use each f[i] only once to 
+ * calculate dp[i + 1] and update f[i + 1]. And also because we also need to find the sequence, I use array trace
+ * instead of f. trace[u][v][k] = the id of the last element of the (longest) beautiful sequence having length equals to f[u][v][k]
  */
 #include <bits/stdc++.h>
 using namespace std;
