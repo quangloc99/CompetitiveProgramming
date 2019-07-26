@@ -16,6 +16,7 @@
  * Note that to reduce the array size, we can discard the first dimension, because at each moment we use each f[i] only once to 
  * calculate dp[i + 1] and update f[i + 1]. And also because we also need to find the sequence, I use array trace
  * instead of f. trace[u][v][k] = the id of the last element of the (longest) beautiful sequence having length equals to f[u][v][k]
+ * at the moment. And the dp array now is a pair, the dp[i].second will be the j in the formula above.
  */
 #include <bits/stdc++.h>
 using namespace std;
