@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+NTEST=10000
+
+clear
+for ((i = 0; i < $NTEST; i += 1));
+do
+    echo Test $i
+    ./test-generator 100 1625 > test.inp
+    verdict=`./grader < test.inp`
+    if [ "$verdict" != "AC" ]
+    then
+        echo $verdict
+        break
+    fi
+done
