@@ -1,3 +1,6 @@
+/**
+ * Author: Tran Quang Loc (darkkcyan)
+ */
 #include<bits/stdc++.h>
 #include "icc.h"
 using namespace std;

@@ -1,3 +1,6 @@
+/**
+ * Author: Tran Quang Loc (darkkcyan)
+ */
 #ifndef __ICC_H__
 #define __ICC_H__
 
