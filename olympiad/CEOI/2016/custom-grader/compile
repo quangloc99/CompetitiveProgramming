@@ -1,2 +1,0 @@
-#!/usr/bin/bash
-g++ -O2 -Wall -Wconversion -Wshadow -std=c++11 grader.cpp icc.cpp -o grader
