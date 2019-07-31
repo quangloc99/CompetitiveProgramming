@@ -1,6 +1,6 @@
 /**
  * Author: Tran Quang Loc
- * For usage, please visit:
+ * For usage, please visit: https://github.com/quangloc99/CompetitiveProgramming/tree/master/prepared-code/segment-tree
  */
 
 #include<bits/stdc++.h>

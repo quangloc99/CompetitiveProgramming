@@ -1,12 +1,25 @@
+/**
+ * Author: Tran Quang Loc (darkkcyan)
+ * Idea; 
+ * - It is clear that we should you segment tree (with lazy propagation).
+ * - Each node of the segment tree, we should store a range: low and high - the minimum and maximum
+ *   values of all elements in this node.
+ * - The lazy information of each node should also be a range with 2 values above.
+ *   When we apply the lazy information to the node's data, we change the node's data
+ *   to the its intersection with the lazy range. If they are not intersected, then
+ *   we assign this node's values to the end point of the lazy range, which is 
+ *   closer to the current data range.
+ * - When we got a query of the 1st type, we update the range with `low` = `height`, and `high = infinity`.
+ *   For the second type, `low` = 0, and `high = height`.
+ */
 #include <bits/stdc++.h>
 using namespace std;
 using namespace std::placeholders;
 
 /**
  * Author: Tran Quang Loc
+ * For usage, please visit: https://github.com/quangloc99/CompetitiveProgramming/tree/master/prepared-code/segment-tree
  */
-
-#include<bits/stdc++.h>
 
 template<typename TVal>
 struct segtree_node {
