@@ -1,5 +1,6 @@
 /**
  * Author: Tran Quang Loc (darkkcyan)
+ * Problem: https://wcipeg.com/problem/ioi1412
  * Idea; 
  * - It is clear that we should you segment tree (with lazy propagation).
  * - Each node of the segment tree, we should store a range: low and high - the minimum and maximum
