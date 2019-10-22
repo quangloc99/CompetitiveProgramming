@@ -16,7 +16,7 @@
  *
  * So here is the **BETTER** solution: 
  * - Let's call sum[i] = sum of all v[i]
- * - For each person i, we calculate array split[i], such that if we use this array
+ * - For each person i, we calculate array split[i][], such that if we use this array
  *   for splitting the nan, we can get n part that equals to sum[i] / n;
  * - So we do as above with a little modification. We first pick the first person i
  *   having the smallest split[i][1]. Remove this person. Then we pick the second person
