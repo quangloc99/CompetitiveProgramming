@@ -12,7 +12,7 @@
  * this. But the solution below has different implementation with another proof that is a lots
  * simpler and easier for both understanding and implementation. 
  * The solution above also have a big problem though, and it is mentioned in the slide. That is,
- * rational number calculation, so this solution can not obtain 100% score.
+ * rational number calculation, so that solution can not obtain 100% score.
  *
  * So here is the **BETTER** solution: 
  * - Let's call sum[i] = sum of all v[i]
