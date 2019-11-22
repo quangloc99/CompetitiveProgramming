@@ -1,7 +1,6 @@
 /**
  * Author: Tran Quang Loc (darkkcyan)
- *
- * This code is designed to work with not only string but also vector.
+ * Tested with https://github.com/quangloc99/CompetitiveProgramming/blob/master/SPOJ/NAJPF.cpp
  */
  
 template<class container>
