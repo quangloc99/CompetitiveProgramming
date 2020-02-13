@@ -10,7 +10,7 @@
  *
  * - 2*k*N and 2*k*N + 1 seems to alternate in some period. The period is a bit hard to be seen. When using simulation,
  *   the period change when L is equals to 2*i*N + 1. In fact, the period is double by 2, and the new part is the 
- *   period is the "compliment" of the old period. Example for the first few period (I just write the parities, and 
+ *   period is the "complement" of the old period. Example for the first few period (I just write the parities, and 
  *   the spaces between the numbers just for the eyes).
  *     0110
  *     0110 1001
