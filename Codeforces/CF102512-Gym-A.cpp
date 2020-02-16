@@ -4,13 +4,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+enum BLOCK_TREE_TYPE {
+    BLOCK_CUT_TREE = 0, BRIDGE_TREE = 1
+};
+
 template<class Graph, int node_start_id = 1>
-struct block_cut_tree_builder {
+struct block_tree_builder {
     int n;
     vector<int> low, num;
     const Graph& gr;
 
-    block_cut_tree_builder(int n_, const Graph& gr_)
+    block_tree_builder(int n_, const Graph& gr_)
         : n(n_ + node_start_id), low(n), num(n, -1), gr(gr_)
     { }
 
@@ -18,7 +22,22 @@ struct block_cut_tree_builder {
     vector<vector<int>> bc_tree;
     int counter;
 
-    void dfs_find_art(int u, int p = -1) {
+    void add_tree_edge(int u, int v) {
+        bc_tree[u].emplace_back(v);
+        bc_tree[v].emplace_back(u);
+        // clog << u << ' ' << v << endl; 
+    }
+
+    int new_component(int last_node = -1) {
+        int comp_id = (int)bc_tree.size();
+        bc_tree.emplace_back();
+        for (; stk.size() and (!bc_tree.back().size() or bc_tree.back().back() != last_node); stk.pop_back())
+            add_tree_edge(comp_id, stk.back());
+        return comp_id;
+    }
+
+    template<BLOCK_TREE_TYPE tree_type>
+    void dfs(int u, int p = -1) {
         low[u] = num[u] = counter++;
         stk.push_back(u);
         for (auto v: gr[u]) {
@@ -27,25 +46,23 @@ struct block_cut_tree_builder {
                 low[u] = min(low[u], num[v]);
                 continue;
             }
-            dfs_find_art(v, u);
+            dfs<tree_type>(v, u);
             low[u] = min(low[u], low[v]);
-            if (low[v] < num[u]) continue;
-            // now this node is articular points if it is non-root or it has more than 1 child.
-            int comp_id = (int)bc_tree.size();
-            bc_tree.emplace_back();
-            for (int cur_node = u; ; cur_node = stk.back(), stk.pop_back()) {
-                bc_tree[comp_id].push_back(cur_node);
-                bc_tree[cur_node].push_back(comp_id);
-                if (cur_node == v) break;
-            }
+            if (low[v] < num[u] + tree_type) continue;
+            int comp_id = new_component(v);
+            add_tree_edge(u, tree_type == BLOCK_CUT_TREE ? comp_id : v);
         }
     }
 
+    template<BLOCK_TREE_TYPE tree_type>
     vector<vector<int>> build() {
         counter = 0;
         bc_tree.assign(n, vector<int>());
         for (int i = node_start_id; i < n; ++i)
-            if (num[i] == -1) dfs_find_art(i);
+            if (num[i] == -1) {
+                dfs<tree_type>(i);
+                new_component();
+            }
         return bc_tree;
     }
 };
@@ -146,7 +163,7 @@ int main(void) {
         gr[v].push_back(u);
     }
     
-    bc_tree = block_cut_tree_builder(n, gr).build();
+    bc_tree = block_tree_builder(n, gr).build<BLOCK_CUT_TREE>();
     memset(depth, -1, sizeof(depth));
     rep1(i, n) {
         if (depth[i] != -1) continue;
