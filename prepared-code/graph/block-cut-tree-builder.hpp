@@ -16,52 +16,45 @@
 template<class Graph, int node_start_id = 1>
 struct block_cut_tree_builder {
     int n;
-    vector<bool> is_art;
     vector<int> low, num;
     const Graph& gr;
 
     block_cut_tree_builder(int n_, const Graph& gr_)
-        : n(n_ + node_start_id), is_art(n), low(n), num(n, -1), gr(gr_)
+        : n(n_ + node_start_id), low(n), num(n, -1), gr(gr_)
     { }
 
     vector<int> stk;
-    vector<vector<int>> components;
-    int root_cnt_child, counter;
+    vector<vector<int>> bc_tree;
+    int counter;
 
-    void dfs_find_art(int u, int p = -1) {
+    void dfs(int u, int p = -1) {
         low[u] = num[u] = counter++;
         stk.push_back(u);
         for (auto v: gr[u]) {
             if (v == p) continue;
-            if (num[v] == -1) {
-                if (p == -1) ++root_cnt_child;
-                dfs_find_art(v, u);
-                low[u] = min(low[u], low[v]);
-                if (low[v] < num[u]) continue;
-                is_art[u] = p >= 0 or root_cnt_child > 1;
-                components.emplace_back(1, u);
-                for (auto& cur_comp = components.back(); cur_comp.back() != v; stk.pop_back())
-                    cur_comp.push_back(stk.back());
-            } else low[u] = min(low[u], num[v]);
+            if (num[v] != -1) {
+                low[u] = min(low[u], num[v]);
+                continue;
+            }
+            dfs(v, u);
+            low[u] = min(low[u], low[v]);
+            if (low[v] < num[u]) continue;
+            // now this node is articular points if it is non-root or it has more than 1 child.
+            int comp_id = (int)bc_tree.size();
+            bc_tree.emplace_back();
+            for (int cur_node = u; ; cur_node = stk.back(), stk.pop_back()) {
+                bc_tree[comp_id].push_back(cur_node);
+                bc_tree[cur_node].push_back(comp_id);
+                if (cur_node == v) break;
+            }
         }
     }
 
     vector<vector<int>> build() {
         counter = 0;
+        bc_tree.assign(n, vector<int>());
         for (int i = node_start_id; i < n; ++i)
-            if (num[i] == -1) {
-                root_cnt_child = 0;
-                dfs_find_art(i);
-            }
-        vector<vector<int>> bc_tree(n + components.size() + 1);
-        int new_node = n;
-        for (auto& comp: components) {
-            int cur_node = new_node ++;
-            for (auto u: comp) {
-                bc_tree[u].push_back(cur_node);
-                bc_tree[cur_node].push_back(u);
-            }
-        }
+            if (num[i] == -1) dfs(i);
         return bc_tree;
     }
 };
