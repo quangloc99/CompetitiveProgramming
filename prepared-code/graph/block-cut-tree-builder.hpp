@@ -1,6 +1,18 @@
 // Author: Tran Quang Loc (darkkcyan)
 // Tested with https://github.com/quangloc99/CompetitiveProgramming/blob/master/Codeforces/CF102512-Gym-A.cpp
 
+// Tree's structure built with this code:
+// - Suppose there are n nodes in the original graphs, and its has m biconnected components.
+//   The built tree will have n + m nodes in total.
+// - The tree includes all n nodes in the original graphs (numbered from 1 to n, or you can adjust node_start_id).
+//   m nodes will represent the binconnected comonents (numbered from n + 1 to n + m).
+// - If node u in the original graph is in the component v, then nodes u and v + n in the tree will be connected.
+// - Hence the tree has this properties:
+//   + All original nodes has label <= n.
+//   + All leaves in the tree are original nodes which are not articular points.
+//   + All nodes with label <= n, which are not leaves, are articular points in the original graph.
+//   + You can write some more if you want.
+
 template<class Graph, int node_start_id = 1>
 struct block_cut_tree_builder {
     int n;
