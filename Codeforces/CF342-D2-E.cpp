@@ -1,63 +1,44 @@
-/**
- * Author: Tran Quang Loc (darkkcyan)
- * Problem: https://codeforces.com/contest/342/problem/E
- */
+// Author: Tran Quang Loc (darkkcyan)
+// Problem: https://codeforces.com/problemset/problem/342/E
 #include <bits/stdc++.h>
 using namespace std;
 using namespace std::placeholders;
 
-#define llong long long 
-#define xx first
-#define yy second
-#define len(x) ((int)x.size())
-#define rep(i,n) for (int i = -1; ++ i < n; )
-#define rep1(i,n) for (int i = 0; i ++ < n; )
-#define all(x) x.begin(), x.end()
-// #define rand __rand
-// mt19937 rng(chrono::system_clock::now().time_since_epoch().count());  // or mt19937_64
-// template<class T = int> T rand(T range = numeric_limits<T>::max()) {
-    // return (T)(rng() % range);
-// }
+template<class Graph, int node_start_id = 1>
+struct centroid_decomposer {
+    int n;
+    const Graph& gr;
+    vector<bool> mark;
+    vector<int> child_cnt;
 
-#define maxn 101010
-#define maxlogn 18
-#define inf (maxn + 100)
-int n;
-vector<int> gr[maxn];
-template<int nn> class centroid_decomposer {
-    int childcnt[nn];
-    int dfscountchild(int u, int p) {
-        childcnt[u] = 1;
+    centroid_decomposer(int n_, const Graph& gr_)
+        : n(n_ + node_start_id), gr(gr_), mark(n), child_cnt(n) {}
+
+    int dfs_count_child(int u, int p) {
+        child_cnt[u] = 1;
         for (auto v: gr[u]) if (v != p and !mark[v])
-            childcnt[u] += dfscountchild(v, u);
-        return childcnt[u];
+            child_cnt[u] += dfs_count_child(v, u);
+        return child_cnt[u];
     }
 
-public:
-    // uncomment these 2 lines for custom graph
-    // int n;
-    // vector<int> gr[nn];
-    bitset<nn> mark;
-
-    // possible modification:
-    // - return a pair which contain a new centroid and the size of its region (which is the `total` variable)
+    // possible modification: return a pair which contain a new centroid and
+    // the size of its region (the `total` variable)
     int find_centroid(int u, int p = -1, int total = -1) {
         assert(u != -1);
-        if (p == -1) total = dfscountchild(u, u);
-        pair<int, int> big_child(total - childcnt[u], -1);
+        if (p == -1) total = dfs_count_child(u, u);
+        pair<int, int> big_child(total - child_cnt[u], -1);
         for (auto v: gr[u]) if (!mark[v] and v != p)
-            big_child = max(big_child, {childcnt[v], v});
+            big_child = max(big_child, {child_cnt[v], v});
         if (big_child.first > total / 2) 
             return find_centroid(big_child.second, u, total);
         mark[u] = 1;
         return u;
     }
 
-    // possible modification:
-    // - return adjacency list instead of parent list
-    vector<int> build_centroid_tree(int s = 1) {
+    // possible modification: return adjacency list instead of parent list
+    vector<int> build_centroid_tree(int s = node_start_id) {
         s = find_centroid(s);
-        vector<int> cen_parent(n + 1, -1);
+        vector<int> cen_parent(n, -1);
         queue<int> qu;
         for (qu.push(s), cen_parent[s] = s; qu.size(); qu.pop()) {
             int u = qu.front();
@@ -72,6 +53,21 @@ public:
     }
 };
 
+#define clog if (0) cout
+
+#define llong long long 
+#define xx first
+#define yy second
+#define len(x) ((int)x.size())
+#define rep(i,n) for (int i = -1; ++ i < n; )
+#define rep1(i,n) for (int i = 0; i ++ < n; )
+#define all(x) x.begin(), x.end()
+
+#define maxn 101010
+#define maxlogn 18
+#define inf (maxn + 100)
+int n;
+vector<int> gr[maxn];
 int depth[maxn], lift[maxlogn][maxn];
 void dfs(int u, int p) {
     lift[0][u] = p;
@@ -101,23 +97,22 @@ int dist(int u, int v) {
     return ans;
 }
 
-centroid_decomposer<maxn> cd;
 vector<int> cen_parent;
 pair<int, int> cen_closest[maxn];
 void upd(int u, int node) {
-    // clog << __func__ << endl;
+    clog << __func__ << endl;
     cen_closest[u] = min(cen_closest[u], {dist(u, node), node});
-    // clog << u << ' ' << cen_closest[u].xx << ' ' << dist(u, node) << endl;
+    clog << u << ' ' << cen_closest[u].xx << ' ' << dist(u, node) << endl;
     if (cen_parent[u] != u) upd(cen_parent[u], node);
 }
 
 int get_closest(int u) {
-    // clog << __func__ << endl;
-    // clog << u << endl;
+    clog << __func__ << endl;
+    clog << u << endl;
     pair<int, int> ans(inf, -1);
     for (int c = u; ; c = cen_parent[c]) {
         int v = cen_closest[c].yy;
-        // clog << c << ' ' << v << endl;
+        clog << c << ' ' << v << endl;
         if (v != -1)
             ans = min(ans, {dist(u, v), v});
         if (c == cen_parent[c]) break;
@@ -135,7 +130,7 @@ int main(void) {
         gr[v].push_back(u);
     }
     dfs(1, 1);
-    cen_parent = cd.build_centroid_tree();
+    cen_parent = centroid_decomposer(n, gr).build_centroid_tree();
     rep1(i, n) cen_closest[i] = {inf, -1};
     upd(1, 1);
     while (q--) {
