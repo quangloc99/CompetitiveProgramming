@@ -3,7 +3,7 @@
 // Author: Tran Quang Loc (darkkcyan)
 // Problem: https://www.infoarena.ro/problema/unique
 // Short statement:
-//   Given an array. Find the length of a subsequence that its contains every number from 1 to the maximum number in it.
+//   Given an array. Find the length of a subarray that its contains every number from 1 to the maximum number in it.
 //
 // Idea:
 // - Well if we look at the whole array, if there is no missing value, then we are done, the result it its length.
