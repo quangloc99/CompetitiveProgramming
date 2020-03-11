@@ -8,7 +8,7 @@
 // - Let's now do sweepline from bottom to top. Doing that we just need to pick point with x's coordinate
 //   less than the current point.
 // - If we see there is a previsous point that can reach the curernt point, then we MUST do that.
-//   Because suppose that we dont and create a new cart at this point, and use the current point to
+//   Because suppose that we dont and create a new cart at the current point, and use the previous point to
 //   reach a later point (which could not be reached from the current point), then the number of cart
 //   (more over, the set of carts) are the same as we move that previous cart to the current point,
 //   and create new one at the later point. 
