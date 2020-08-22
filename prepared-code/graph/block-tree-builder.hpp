@@ -78,7 +78,7 @@ vector<vector<int>> build_block_tree(int n, const Graph& gr) {
     for (int i = node_start_id; i < n; ++i) {
         if (num[i] == -1) {
             dfs(i, -1);
-            new_component();
+            if (tree_type == BRIDGE_TREE) new_component();
         }
         // make the component id to be the first element. can be removed if not needed
         for (int& f: bc_tree[i]) if (f > n) {
