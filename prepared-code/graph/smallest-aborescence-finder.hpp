@@ -1,4 +1,5 @@
 #define SAFinder SmallestAborescenceFinder  // fucking long name
+bool clear_buff = false;  // [optinal] dirty flag for clearing the buffer
 template<class cost_type = long long, size_t buff_size = 300100, int start_id = 1>
 struct SmallestAborescenceFinder {
     // randomized heap
@@ -6,6 +7,10 @@ struct SmallestAborescenceFinder {
         void* operator new (size_t sz) {
             static char buff[buff_size * sizeof(edge_heap)];
             static char* ptr = buff;
+            if (clear_buff) {
+                ptr = buff;
+                clear_buff = false;
+            }
             char* ans = ptr;
             ptr += sz;
             return ans;
@@ -15,8 +20,9 @@ struct SmallestAborescenceFinder {
         cost_type cost, lazy;
         edge_heap *l, *r;
         edge_heap(int f = 0, int t = 0, cost_type c = 0, cost_type lz = 0)
-            : from(f), to(t), cost(c), lazy(lz) {}
+            : from(f), to(t), cost(c), lazy(lz), l(0), r(0) {}
     };
+
     
     static void propagate(edge_heap* hp) {
         if (!hp) return ;
