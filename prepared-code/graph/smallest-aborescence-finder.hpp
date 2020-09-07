@@ -72,6 +72,8 @@ struct SmallestAborescenceFinder {
         edge_set[to] = merge(edge_set[to], new edge_heap(from, to, cost));
     }
     
+    // return nothing if there is no answer, otherwise the smallest aborescence
+    // the built tree can be access via fv array.
     optional<cost_type> find() {
         cost_type ans = -shift_cost * (n - 1 - start_id);  // - start_id because at the beginning start_id was added to n.
         
