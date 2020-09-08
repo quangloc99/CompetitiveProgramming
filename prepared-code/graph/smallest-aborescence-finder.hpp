@@ -33,13 +33,13 @@ struct SmallestAborescenceFinder {
     }
     
     static edge_heap* merge(edge_heap* u, edge_heap* v) {
-        static mt19937 rng(time(0));
+        static mt19937 rng_(time(0));
         propagate(u);
         propagate(v);
         if (!u) return v;
         if (!v) return u;
         if (u->cost > v->cost) swap(u, v);
-        if (rng() & 1) swap(u->l, u->r);
+        if (rng_() & 1) swap(u->l, u->r);
         u->l = merge(u->l, v);
         return u;
     }
@@ -97,7 +97,13 @@ struct SmallestAborescenceFinder {
             edge_set[v] = 0;
         });
 
-        vector zero_edge_gr(n, vector<int>());
+        // picked_edges[0] will be edges of the tree in the compressed graph
+        // picked_edges[i] for i > 0 will stores cycles
+        //   ealier compressed cycle will have smaller id
+        // list are use for fast removal
+        vector<list<pair<int, int>>> picked_edges(1);
+        vector<list<pair<int, int>>::iterator> fv_it(n);  // store the position of the edge in the list for fast removal
+        vector cycle_list(n, list<int>());                // list of "sorted" cycles's id for each nodes.
         
         for (; qu.size(); qu.pop()) {
             int u = d2.find_set(qu.front());
@@ -105,11 +111,13 @@ struct SmallestAborescenceFinder {
             // step 2.1: find the smallest edge that go into u.
             auto mx = *edge_set[u];
             int v = d2.find_set(mx.from);
-            fv[u] = v;
+            
+            fv[u] = mx.from;
+            picked_edges[0].emplace_front(mx.from, mx.to);
+            fv_it[u] = picked_edges[0].begin();
             
             edge_set[u] = merge(edge_set[u]->l, edge_set[u]->r);
             ans += mx.cost;
-            zero_edge_gr[mx.from].push_back(mx.to);
             
             // step 2.2: subtract all edges of the set by mx.cost
             if (edge_set[u]) {
@@ -119,14 +127,20 @@ struct SmallestAborescenceFinder {
             
             if (d1.find_set(u) == d1.find_set(v)) {
                 // step 3: find the edge
-                vector<int> nodes;  // need to get all the nodes before joining,
+                vector<int> nodes = {u};  // need to get all the nodes before joining,
                                     // because otherwise their set changes while joining.
                 for (int x = v; x != u; x = d2.find_set(fv[x])) nodes.push_back(x);
                 
-                // step 4: join them
+                // step 4: join them, create new cycle
+                list<pair<int, int>> cycle;
+                int cycle_id = (int)picked_edges.size();
                 for (auto x: nodes) {
                     d2.join(u, x);
+                    cycle.push_back(*fv_it[x]);
+                    cycle_list[fv_it[x]->second].push_back(cycle_id);
+                    picked_edges[0].erase(fv_it[x]);
                 }
+                picked_edges.push_back(move(cycle));
                 
                 // step 5: remove new rings
                 int joined = d2.find_set(u);
@@ -139,31 +153,37 @@ struct SmallestAborescenceFinder {
             }
             d1.join(u, v);
         }
-
+        
         // check and find the actual tree
         
         fill(fv.begin(), fv.end(), -1);
-        int cnt = start_id;
         
-        // build the dfs tree of the graph created by all zero_edge, and the latest added
-        // nodes need to be tranversed first. the tree will be the answer. 
-        // This is correct, because:
-        // - back edge should always be removed.
-        // - we need to break the latest joined cycle before the other, hence we need to 
-        // tranverse lastest added nodes first. so the cross edge will also need to be removed.
-        function<void(int)> dfs = [&](int u) {
-            ++cnt;
-            for (int i = (int)zero_edge_gr[u].size(); i--; ) {
-                int v = zero_edge_gr[u][i];
-                if (fv[v] != -1) continue;
-                fv[v] = u;
-                dfs(v);
+        // cycle are iterated in the following order:
+        // - cycle having ealier discovered nodes will be tranversed first
+        // - cycle compressed first (having smaller id) willbe tranversed first
+        function<void(list<pair<int, int>>&)> assign_edge = [&](list<pair<int, int>>& edge_list) {
+            vector<int> nodes;
+            for (auto [from, to]: edge_list) {
+                nodes.push_back(to);
+                if (fv[to] == -1) fv[to] = from;
+            }
+            edge_list.clear();
+            for (auto u: nodes) {
+                for (auto cycle_id: cycle_list[u]) {
+                    assign_edge(picked_edges[cycle_id]);
+                }
             }
         };
-        dfs(root);
-        bool has_ans = cnt == n;
-        if (has_ans) return {ans};
-        return {};
+        
+        assign_edge(picked_edges[0]);
+        for (int i = start_id; i < n; ++i) {
+            if (i == root) continue;
+            if (fv[i] == -1) {
+                return {};
+            }
+        }
+        
+        return {ans};
     }
     
 };
